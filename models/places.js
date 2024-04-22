@@ -1,14 +1,15 @@
-let places = [{
-    name: 'H-Thai-ML',
+module.exports = [{
+    name: 'Acai Code',
     city: 'Seattle',
     state: 'WA',
-    cuisines: 'Thai, Pan-Asian',
+    cuisines: 'Smoothies, Acai Bowls',
+    pic: '/images/acai.png'
+}, {
+    name: 'HTML Coffee Shop',
+    city: 'Phoenix',
+    state: 'AZ',
+    cuisines: 'Coffee, Bakery',
     pic: '/images/coffee.png'
-  }, {
-      name: 'Coding Cat Cafe',
-      city: 'Phoenix',
-      state: 'AZ',
-      cuisines: 'Coffee, Bakery',
-      pic: '/images/acai.jpg'
-  }]
+}]
+
   
