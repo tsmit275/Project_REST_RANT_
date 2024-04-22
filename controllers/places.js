@@ -1,25 +1,24 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+
+router.use(express.urlencoded({ extended: true }));
 
 router.get('/', (req, res) => {
     let places = [
-        { name: 'Restaurant A', city: 'City A', state: 'State A', cuisines: 'Cuisines A', pic: 'https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg?auto=compress&cs=tinysrgb&w=600' },
-        { name: 'Restaurant B', city: 'City B', state: 'State B', cuisines: 'Cuisines B', pic: 'https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=600' }
-    ]
+        { name: 'Showmers', city: 'Augusta', state: 'GA', cuisines: 'Soul Food', pic: 'https://images.pexels.com/photos/12118980/pexels-photo-12118980.jpeg?auto=compress&cs=tinysrgb&w=800' },
+        { name: 'Nayas', city: 'Houston', state: 'TX', cuisines: 'American', pic: 'https://images.unsplash.com/photo-1555196301-9acc011dfde4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTAzfHxhbWVyaWNhbiUyMGZvb2R8ZW58MHx8MHx8fDA%3D' }
+    ];
 
-    res.render('places/index', { places: places }); // Pass places array to the view
-})
+    res.render('places/index', { places: places }); 
+});
 
 router.get('/new', (req, res) => {
-    res.render('places/new')
-  })
+    res.render('places/new');
+});
 
-  router.post('/', (req, res) => {
-    console.log(req.body)
-    res.send('POST /places')
-  })
-  
+router.post('/', (req, res) => {
+    console.log(req.body);
+    res.send('POST /places');
+});
 
-
-  
-module.exports = router
+module.exports = router;
