@@ -1,44 +1,67 @@
-const express = require('express')
-const router = express.Router()
-const places = require('../models/places.js')
+const express = require('express');
+const router = express.Router();
+const places = require('../models/places.js');
 
-router.use(express.urlencoded({ extended: true }))
+router.use(express.urlencoded({ extended: true }));
 
 router.get('/', (req, res) => {
-    res.render('places/index', { places: places }) 
+    res.render('places/index', { places: places }) ;
 });
 
 router.get('/new', (req, res) => {
-    res.render('places/new')
+    res.render('places/new');
 });
 
 router.post('/', (req, res) => {
     if (!req.body.pic) {
       // Default image if one is not provided
-      req.body.pic = '/images/saddog.png'
+      req.body.pic = '/images/saddog.png';
     }
     if (!req.body.city) {
-      req.body.city = 'Anytown'
+      req.body.city = 'Anytown';
     }
     if (!req.body.state) {
-      req.body.state = 'USA'
+      req.body.state = 'USA';
     }
-    places.push(req.body)
-    res.redirect('/places')
-})
+    places.push(req.body);
+    res.redirect('/places');
+});
 
 router.get('/:id', (req, res) => {
+    let id = Number(req.params.id);
+    if (isNaN(id) || id < 0 || id >= places.length){
+        res.render('error404');
+    } else if (!places[id]) {
+        res.render('error404');
+    } else {
+        res.render('places/show', { place: places[id], id: id});
+    }
+});
+
+router.delete('/:id', (req, res) => {
     let id = Number(req.params.id)
-    if (isNaN(id)){
-        res.render('error404')
+    if (isNaN(id)) {
+      res.render('error404')
     }
     else if (!places[id]) {
-        res.render('error404')
+      res.render('error404')
     }
     else {
-    res.render('places/show', { place: places[id]})
+      places.splice(id, 1)
+      res.redirect('/places')
     }
   })
   
+  router.get('/:id/edit', (req, res) => {
+    let id = Number(req.params.id);
+    if (isNaN(id) || id < 0 || id >= places.length){
+        res.render('error404');
+    } else if (!places[id]) {
+        res.render('error404');
+    } else {
+        res.render('places/edit', { place: places[id], id });
+    }
+});
+
 
 module.exports = router;
