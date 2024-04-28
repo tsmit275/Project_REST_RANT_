@@ -1,8 +1,8 @@
-import React from "react";
-import Def from "../default";
+import React from "react"
+import Def from "../default"
 
 function show(data) {
-  const place = data.place;
+  const place = data.place
   return (
     <Def>
       <head>
@@ -41,7 +41,7 @@ function show(data) {
         </button>
       </form>
     </Def>
-  );
+  )
 }
 
-export default show;
+export default show
