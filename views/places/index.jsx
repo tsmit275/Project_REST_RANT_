@@ -1,5 +1,5 @@
-import React from "react";
-import Def from "../default";
+import React from "react"
+import Def from "../default"
 
 function index({ data }) {
   // Ensure data.places is an array before mapping
@@ -16,7 +16,7 @@ function index({ data }) {
           </p>
         </div>
       ))
-    : null;
+    : null
 
   return (
     <Def>
@@ -25,7 +25,7 @@ function index({ data }) {
         <div className="row">{placesFormatted}</div>
       </main>
     </Def>
-  );
+  )
 }
 
-export default index;
+export default index

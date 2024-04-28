@@ -1,5 +1,5 @@
-const React = require("react");
-const Def = require("../default");
+const React = require("react")
+const Def = require("../default")
 
 function new_form() {
   return (
@@ -41,7 +41,7 @@ function new_form() {
         </form>
       </main>
     </Def>
-  );
+  )
 }
 
-module.exports = new_form;
+module.exports = new_form
