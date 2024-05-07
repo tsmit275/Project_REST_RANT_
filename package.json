@@ -1,22 +1,25 @@
 {
-  "name": "project_rest_rant_",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": ">=21.1.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "express-react-views": "^0.11.0",
     "method-override": "^3.0.0",
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.3.2",
-    "react": "^16.14.0"
-  }
+    "mongoose": "^8.0.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  },
+  "name": "rest-rant",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "# REST-Rant is an app where users can review restaurants.",
+  "keywords": []
 }

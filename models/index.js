@@ -1,30 +1,28 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const { MongoClient } = require('mongodb')
+require("dotenv").config()
+const mongoose = require("mongoose")
+mongoose.set('debug', true)
 
-const mongoUrl = 'mongodb+srv://taylorlsmith03:DdgtpZELPz0Hifsa@rest-rant.wpcwr7p.mongodb.net/?retryWrites=true&w=majority&appName=Rest-Rant'
-const dbName = 'Rest-Rant'
+const MONGO_URI = process.env.MONGO_URI
 
-const app = express()
-const port = 3000
-
-app.use(bodyParser.json())
-app.use(express.static('public'))
-
-MongoClient.connect(mongoUrl, { useUnifiedTopology: true })
-    .then(client => {
-        console.log('Connected to Database');
-        const db = client.db(dbName);
-
-        // Your database operations go here
-
-        app.listen(port, () => {
-            console.log(`Server running on http://localhost:${port}`)
-        })
+const connect = async () => {
+  try {
+    await mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000
     })
-    .catch(error => {
-        console.error('Failed to connect to the database')
-        console.error(error);
-    })
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error)
+    process.exit(1)
+  }
+}
 
+module.exports = {
+  connect,
+  Place: require('./places')
+};
 
+(async () => {
+  await connect()
+})()

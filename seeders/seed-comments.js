@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Place, Comment } = require("../models")
+const { Place } = require("../models")
 
 // Index route
 router.get("/", async (req, res) => {
@@ -34,26 +34,20 @@ router.get("/:id/edit", async (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id
     try {
+        // Dig into req.body and make sure data is valid
         let updateData = {
             pic: req.body.pic || 'http://placekitten.com/400/400',
             city: req.body.city || 'Anytown',
-            state: req.body.state || 'USA',
-            founded: req.body.founded 
+            state: req.body.state || 'USA'
         }
 
         // Update the place
         await Place.findByIdAndUpdate(id, updateData, { runValidators: true })
-
-        console.log('Place updated successfully:', updateData) 
+        console.log('Place updated successfully:', updateData) // Log updated place
         res.redirect(`/places/${id}`)
     } catch (err) {
-        if (err.name === 'ValidationError') {
-            console.log(err.message)
-            res.render('error404')
-        } else {
-            console.log(err)
-            res.render('error404')
-        }
+        console.log(err)
+        res.render('error404')
     }
 })
 
@@ -62,7 +56,7 @@ router.get("/:id", async (req, res) => {
     let id = req.params.id
     try {
         const showPlace = await Place.findById(id)
-        console.log('Place found:', showPlace) 
+        console.log('Place found:', showPlace) // Log found place
         res.render('places/show', { place: showPlace })
     } catch (err) {
         console.log(err)
@@ -78,21 +72,15 @@ router.post('/', async (req, res) => {
             pic: req.body.pic || 'http://placekitten.com/400/400',
             cuisines: req.body.cuisines,
             city: req.body.city || 'Anytown',
-            state: req.body.state || 'USA',
-            founded: req.body.founded 
+            state: req.body.state || 'USA'
         }
 
         await Place.create(newPlace)
-        console.log('New place created:', newPlace) 
+        console.log('New place created:', newPlace) // Log new place created
         res.redirect('/places')
     } catch (err) {
-        if (err.name === 'ValidationError') {
-            console.log(err.message)
-            res.render('error404')
-        } else {
-            console.log(err)
-            res.render('error404')
-        }
+        console.log(err)
+        res.render('error404')
     }
 })
 
@@ -101,27 +89,10 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id
     try {
         await Place.findByIdAndDelete(id)
-        console.log('Place deleted successfully:', id) 
+        console.log('Place deleted successfully:', id) // Log deleted place
         res.redirect('/places')
     } catch (err) {
         console.log(err)
-        res.render('error404')
-    }
-})
-
-// PUT route for submitting comments
-router.put('/:id/comments', async (req, res) => {
-    let id = req.params.id
-    try {
-        const restaurant = await Place.findById(id)
-        let comment = await Comment.create(req.body)
-        
-        restaurant.comments.push(comment.id)
-        await restaurant.save()
-
-        res.redirect(`/places/${id}`)
-    } catch (e) {
-        console.log(e)
         res.render('error404')
     }
 })

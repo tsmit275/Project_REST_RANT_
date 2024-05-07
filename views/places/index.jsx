@@ -1,31 +1,35 @@
-import React from "react"
-import Def from "../default"
+const React = require('react')
+const Def = require('../default')
 
-function index({ data }) {
-  // Ensure data.places is an array before mapping
-  let placesFormatted = Array.isArray(data.places)
-    ? data.places.map((place, index) => (
-        <div className="col-sm-6" key={index}>
-          <h2>
-            <a href={`/places/${index}`}>{place.name}</a>
-          </h2>
-          <p className="text-center">{place.cuisines}</p>
-          <img src={place.pic} alt={place.name} />
-          <p className="text-center">
-            Located in {place.city}, {place.state}
-          </p>
-        </div>
-      ))
-    : null
+function index (data) {
+    let placesFormatted = data.places.map((place, i) => {
+        return (
+            <div className="col-sm-6" key={place.id}>
+                <h2 className="text-center">
+                    <a href={`/places/${place.id}`} >{place.name}</a>
+                </h2>
+                <p className="text-center">
+                    {place.cuisines}
+                </p>
+                <img className="img-fluid" src={place.pic} alt={place.name}/>
+                <p className="text-center">
+                    Located in {place.city}, {place.state}
+                </p>
+            </div>
+        )
+    })
+    return (
+        <Def>
+            <main>
+                <h1 className="text-center">Index Page</h1>
+                <div className="row">
+                    {placesFormatted}
+                </div>
+                <a href="/places/new" className="btn btn-primary">Add New Place</a>
 
-  return (
-    <Def>
-      <main>
-        <h1>Places to Rant or Rave About</h1>
-        <div className="row">{placesFormatted}</div>
-      </main>
-    </Def>
-  )
+            </main>
+        </Def>
+    )
 }
 
-export default index
+module.exports = index
