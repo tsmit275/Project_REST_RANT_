@@ -10,19 +10,17 @@ const connect = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000
-    })
-    console.log("Connected to MongoDB");
+    });
+    console.log("Connected to MongoDB")
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error)
     process.exit(1)
   }
 }
 
-module.exports = {
-  connect,
-  Place: require('./places')
-};
+connect()
 
-(async () => {
-  await connect()
-})()
+module.exports = {
+  Place: require('./places'),
+  Comment: require('./comment') 
+}

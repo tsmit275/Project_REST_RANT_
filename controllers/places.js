@@ -20,10 +20,10 @@ router.get("/new", (req, res) => {
 
 // Edit route
 router.get("/:id/edit", async (req, res) => {
-    let id = req.params.id
     try {
+        const id = req.params.id
         const showPlace = await Place.findById(id)
-        res.render('places/edit', { place: showPlace })
+        res.render('places/edit', { id: id, place: showPlace })
     } catch (err) {
         console.log(err)
         res.render('error404')
@@ -32,8 +32,8 @@ router.get("/:id/edit", async (req, res) => {
 
 // PUT route for updating place
 router.put('/:id', async (req, res) => {
-    let id = req.params.id
     try {
+        const id = req.params.id
         let updateData = {
             pic: req.body.pic || 'http://placekitten.com/400/400',
             city: req.body.city || 'Anytown',
@@ -44,25 +44,20 @@ router.put('/:id', async (req, res) => {
         // Update the place
         await Place.findByIdAndUpdate(id, updateData, { runValidators: true })
 
-        console.log('Place updated successfully:', updateData) 
+        console.log('Place updated successfully:', updateData)
         res.redirect(`/places/${id}`)
     } catch (err) {
-        if (err.name === 'ValidationError') {
-            console.log(err.message)
-            res.render('error404')
-        } else {
-            console.log(err)
-            res.render('error404')
-        }
+        console.log(err)
+        res.render('error404')
     }
 })
 
 // Show route
 router.get("/:id", async (req, res) => {
-    let id = req.params.id
     try {
-        const showPlace = await Place.findById(id)
-        console.log('Place found:', showPlace) 
+        const id = req.params.id;
+        const showPlace = await Place.findById(id).populate('comments')
+        console.log('Place found:', showPlace)
         res.render('places/show', { place: showPlace })
     } catch (err) {
         console.log(err)
@@ -82,26 +77,8 @@ router.post('/', async (req, res) => {
             founded: req.body.founded 
         }
 
-        await Place.create(newPlace)
-        console.log('New place created:', newPlace) 
-        res.redirect('/places')
-    } catch (err) {
-        if (err.name === 'ValidationError') {
-            console.log(err.message)
-            res.render('error404')
-        } else {
-            console.log(err)
-            res.render('error404')
-        }
-    }
-})
-
-// DELETE route
-router.delete('/:id', async (req, res) => {
-    let id = req.params.id
-    try {
-        await Place.findByIdAndDelete(id)
-        console.log('Place deleted successfully:', id) 
+        await Place.create(newPlace);
+        console.log('New place created:', newPlace)
         res.redirect('/places')
     } catch (err) {
         console.log(err)
@@ -109,19 +86,52 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-// PUT route for submitting comments
-router.put('/:id/comments', async (req, res) => {
-    let id = req.params.id
+// DELETE route
+router.delete('/:id', async (req, res) => {
     try {
-        const restaurant = await Place.findById(id)
-        let comment = await Comment.create(req.body)
-        
-        restaurant.comments.push(comment.id)
-        await restaurant.save()
+        const id = req.params.id;
+        await Place.findByIdAndDelete(id)
+        console.log('Place deleted successfully:', id)
+        res.redirect('/places')
+    } catch (err) {
+        console.log(err)
+        res.render('error404')
+    }
+})
 
-        res.redirect(`/places/${id}`)
-    } catch (e) {
-        console.log(e)
+// POST route for submitting comments
+router.post('/:id/comment', async (req, res) => {
+    try {
+        const place = await Place.findById(req.params.id)
+        if (!place) {
+            return res.render('error404')
+        }
+        
+        const comment = new Comment({
+            author: req.body.author,
+            content: req.body.content,
+            stars: parseFloat(req.body.stars),
+            rant: req.body.rant === 'on'
+        })
+
+        await comment.save()
+        place.comments.push(comment)
+        await place.save()
+
+        res.redirect(`/places/${req.params.id}`)
+    } catch (err) {
+        console.log(err)
+        res.render('error404')
+    }
+})
+
+// DELETE route for deleting comments
+router.delete('/:id/comment/:commentId', async (req, res) => {
+    try {
+        await Comment.findByIdAndDelete(req.params.commentId)
+        res.redirect(`/places/${req.params.id}`)
+    } catch (err) {
+        console.log(err)
         res.render('error404')
     }
 })
