@@ -21,8 +21,8 @@ function index (data) {
     return (
         <Def>
             <main>
-                <h1 className="text-center">Index Page</h1>
-                <div className="row">
+                <h1 className="text-center">Restaurants</h1>
+                <div className="row">git
                     {placesFormatted}
                 </div>
                 <a href="/places/new" className="btn btn-primary">Add New Place</a>
