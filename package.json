@@ -7,6 +7,7 @@
     "express": "^4.19.2",
     "express-react-views": "^0.11.0",
     "method-override": "^3.0.0",
+    "mongodb": "^6.6.1",
     "mongoose": "^8.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"

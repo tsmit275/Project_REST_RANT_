@@ -22,7 +22,7 @@ function index (data) {
         <Def>
             <main>
                 <h1 className="text-center">Restaurants</h1>
-                <div className="row">git
+                <div className="row">
                     {placesFormatted}
                 </div>
                 <a href="/places/new" className="btn btn-primary">Add New Place</a>
