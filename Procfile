@@ -1,1 +1,4 @@
-web:node index.js
+# Procfile 
+web: npm start
+
+

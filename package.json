@@ -1,4 +1,17 @@
 {
+  "name": "rest-rant",
+  "version": "1.0.0",
+  "description": "# REST-Rant is an app where users can review restaurants.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --inspect index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "author": "",
+  "license": "ISC",
   "engines": {
     "node": ">=21.1.0"
   },
@@ -12,15 +25,10 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
   },
-  "name": "rest-rant",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "# REST-Rant is an app where users can review restaurants.",
   "keywords": []
 }
