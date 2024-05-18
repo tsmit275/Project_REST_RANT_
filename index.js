@@ -15,14 +15,11 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Connected to MongoDB');
-}).catch(err => {
-    console.error('Error connecting to MongoDB:', err.message);
+// Controllers and Routes
+app.use("/places", require("./controllers/places"));
+
+app.get("/", (req, res) => {
+    res.render("home");
 });
 
 // Error handling middleware
@@ -31,15 +28,18 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-// Controllers and Routes
-app.use("/places", require("./controllers/places"));
-
-app.get("/", (req, res) => {
-    res.render("home");
-});
-
 app.get("*", (req, res) => {
     res.render('error404');
+});
+
+// Connect to MongoDB
+mongoose.connect(process.env.PORT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Error connecting to MongoDB:', err.message);
 });
 
 const PORT = process.env.PORT || 3000;

@@ -16,7 +16,7 @@
     "node": ">=21.1.0"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-react-views": "^0.11.0",
     "method-override": "^3.0.0",
@@ -26,8 +26,8 @@
     "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22",
     "eslint": "^8.45.0",
+    "nodemon": "^2.0.22",
     "prettier": "^3.0.0"
   },
   "keywords": []
